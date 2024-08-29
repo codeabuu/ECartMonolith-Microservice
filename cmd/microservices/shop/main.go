@@ -15,7 +15,7 @@ func main() {
 
 	r := createShopMicroservice()
 
-	server := &http.Server{Addr: os.Getenv("SHOP_PRODUCT_SERVICE_BIND_ADDR"), Handler: r}
+	server := &http.Server{Addr: os.Getenv("SHOP_SHOP_PRODUCT_SERVICE_BIND_ADDR"), Handler: r}
 
 	go func() {
 		if err := server.ListenAndServe(); err != http.ErrServerClosed {
