@@ -37,7 +37,7 @@ func createOrderMicroservice() (router *chi.Mux, closeFn func()) {
 
 	shopHTTPClient := orders_infra_product.NewHTTPClient(os.Getenv("SHOP_SERVICE_ADDR"))
 
-	r := cmd.createRouter()
+	r := cmd.CreateRouter()
 
 	orders_public_http.AddRoutes(r, ordersService, ordersRepo)
 	order_private_http.AddRoutes(r, ordersService, ordersRepo)
