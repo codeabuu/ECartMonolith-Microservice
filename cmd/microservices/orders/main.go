@@ -16,7 +16,7 @@ func main() {
 	r, closeFn := createOrderMicroservice()
 	defer closeFn()
 
-	server := &http.Server{Addr: os.Getenv("SHOP_ORDER_SERVICE_BIND_ADDR"), Handler: r}
+	server := &http.Server{Addr: os.Getenv("SHOP_SHOP_ORDER_SERVICE_BIND_ADDR"), Handler: r}
 
 	go func() {
 		if err := server.ListenAndServe(); err != http.ErrServerClosed {
