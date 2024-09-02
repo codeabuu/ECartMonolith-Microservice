@@ -1,0 +1,45 @@
+version: '3'
+services:
+  monolith:
+    build: .
+    entrypoint: []
+    ports:
+      - "8090:8080"
+    environment:
+      - SH0P_MONOLITH_BIND_ADDR=: 8080
+    volumes:
+      - ./cmd/:$GO_PROJECT_DIR/cmd/
+      - ./pkg/:$GO_PROJECT_DIR/pkg/
+  orders:
+    build: .
+    entrypoint: []
+    ports:
+      - "8070:8080"
+    environment:
+      - SHOP_ORDERS_SERVICE_BIND_ADDR=:8080
+      - SHOP_RABBITMQ_ADDR=rabbitmq:5672
+      - SHOP_RABBITMQ_ORDERS_TO_PAY_QUEUE=orders-to-pay
+      - SHOP_SHOP_SERVICE_ADDR=http://shop:8080
+    volumes:
+    depends_on:
+      - rabbitmq
+  payments:
+    build: .
+    entrypoint: []
+    volumes:
+    environment:
+      - SHOP_RABBITMQ_ADDR=rabbitmq:5672
+      - SHOP_RABBITMQ_ORDERS_TO_PAY_QUEUE=orders-to-pay
+      - SHOP_ORDERS_SERVICE_ADDR=http://orders:8080
+    depends_on:
+      - rabbitmq
+  shop:
+    build: .
+    entrypoint: []
+    volumes:
+    environment:
+      - SHOP_SHOP_SERVICE_BIND_ADDR=:8080
+    ports:
+      - "8071:8080"
+    depends_on:
+      - rabbitmq
