@@ -1,19 +1,35 @@
 package products
 
-import()
+import products "github.com/codeabuu/ECartMonolith-Microservice/pkg/shop/domain"
 
-type MemoryRepository struct{
-
+type MemoryRepository struct {
+	products []products.Product
 }
 
-func Save{
-
+func NewMemoryRepository() *MemoryRepository {
+	return &MemoryRepository{[]products.Product{}}
 }
 
-func ByID{
-
+func (m *MemoryRepository) Save(productToSave *products.Product) error {
+	for i, p := range m.products {
+		if p.ID() == productToSave.ID() {
+			m.products[i] = *productToSave
+			return nil
+		}
+	}
+	m.products = append(m.products, *productToSave)
+	return nil
 }
 
-func AllProducts(){
+func (m MemoryRepository) ByID(id products.ID) (*products.Product, error) {
+	for _, p := range m.products {
+		if p.ID() == id {
+			return &p, nil
+		}
+	}
+	return nil, products.ErrNotFound
+}
 
+func (m MemoryRepository) AllProducts() ([]products.Product, error) {
+	return m.products, nil
 }
