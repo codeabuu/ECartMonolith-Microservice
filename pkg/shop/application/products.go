@@ -1,6 +1,8 @@
 package products
 
 import (
+	"errors"
+
 	"github.com/codeabuu/ECartMonolith-Microservice/pkg/common/price"
 	"github.com/codeabuu/ECartMonolith-Microservice/pkg/shop/infrastructure/products"
 )
@@ -14,12 +16,12 @@ type ProductsService struct {
 	readModel productReadModel
 }
 
-func NewProductsService() ProductsService {
-
+func NewProductsService(repo products.Repository, readModel productReadModel) ProductsService {
+	return ProductsService{repo, readModel}
 }
 
-func (s ProductsService) AllProducts() {
-
+func (s ProductsService) AllProducts() ([]products.Product, error) {
+	return s.readModel.AllProducts()
 }
 
 type AddProductCommand struct {
@@ -31,9 +33,20 @@ type AddProductCommand struct {
 }
 
 func (s ProductsService) AddProduct(cmd AddProductCommand) error {
-	price.NewPrice(cmd.PriceCents, cmd.PriceCurrency)
+	price, err := price.NewPrice(cmd.PriceCents, cmd.PriceCurrency)
 
-	products.NewProduct(products.ID(cmd.ID), cmd.Name, cmd.Description, cmd.PriceCents)
+	if err != nil {
+		return errors.Wrap(err, "Invalid prod price")
+	}
 
-	s.repo.Save
+	p, err := products.NewProduct(products.ID(cmd.ID), cmd.Name, cmd.Description, cmd.PriceCents)
+
+	if err != nil {
+		return errors.Wrap(err, "Cant create product")
+	}
+
+	if err := s.repo.Save(p); err != nil {
+		return errors.Wrap(err, "cannot save product")
+	}
+	return nil
 }

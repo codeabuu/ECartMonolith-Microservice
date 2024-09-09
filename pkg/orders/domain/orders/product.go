@@ -8,7 +8,7 @@ import (
 
 type ProductID string
 
-var ErrEmptyProduct = errors.New("Empty product ID")
+var ErrEmptyProduct = errors.New("empty product id")
 
 type Product struct {
 	id    ProductID

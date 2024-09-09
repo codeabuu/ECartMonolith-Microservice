@@ -4,7 +4,7 @@ import "errors"
 
 type ID string
 
-var ErrEmptyOrderID = errors.New("Empty order ID")
+var ErrEmptyOrderID = errors.New("empty order id")
 
 type Order struct {
 	id      ID

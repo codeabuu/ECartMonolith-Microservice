@@ -12,13 +12,13 @@ type Address struct {
 
 func NewAddress(name string, street string, city string, postCode string, country string) (Address, error) {
 	if len(name) == 0 {
-		return Address{}, errors.New("Pls insert name")
+		return Address{}, errors.New("pls insert name")
 	}
 	if len(street) == 0 {
 		return Address{}, errors.New("pls insert street")
 	}
 	if len(city) == 0 {
-		return Address{}, errors.New("Pls insert city")
+		return Address{}, errors.New("pls insert city")
 	}
 	if len(postCode) == 0 {
 		return Address{}, errors.New("pls insert postcode")
