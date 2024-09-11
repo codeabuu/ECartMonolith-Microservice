@@ -1,14 +1,13 @@
 package products
 
 import (
-	"errors"
-
 	"github.com/codeabuu/ECartMonolith-Microservice/pkg/common/price"
-	"github.com/codeabuu/ECartMonolith-Microservice/pkg/shop/infrastructure/products"
+	products "github.com/codeabuu/ECartMonolith-Microservice/pkg/shop/domain"
+	"github.com/pkg/errors"
 )
 
 type productReadModel interface {
-	AllProducts() ([]products.Product, err)
+	AllProducts() ([]products.Product, error)
 }
 
 type ProductsService struct {
@@ -39,7 +38,7 @@ func (s ProductsService) AddProduct(cmd AddProductCommand) error {
 		return errors.Wrap(err, "Invalid prod price")
 	}
 
-	p, err := products.NewProduct(products.ID(cmd.ID), cmd.Name, cmd.Description, cmd.PriceCents)
+	p, err := products.NewProduct(products.ID(cmd.ID), cmd.Name, cmd.Description, price)
 
 	if err != nil {
 		return errors.Wrap(err, "Cant create product")
