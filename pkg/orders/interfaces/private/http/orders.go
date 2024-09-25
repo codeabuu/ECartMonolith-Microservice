@@ -10,14 +10,14 @@ import (
 	"github.com/go-chi/render"
 )
 
-func AddRoutes(router *chi.Mux, service application.OrdersService, repo orders.Repository) {
-	resource := ordersResource{repo, service}
-	router.Post("/orders/{id}/paid", resource.PostPaid)
-}
-
 type ordersResource struct {
 	repo    orders.Repository
 	service application.OrdersService
+}
+
+func AddRoutes(router *chi.Mux, service application.OrdersService, repo orders.Repository) {
+	resource := ordersResource{repo, service}
+	router.Post("/orders/{id}/paid", resource.PostPaid)
 }
 
 func (o ordersResource) PostPaid(w http.ResponseWriter, r *http.Request) {
