@@ -8,9 +8,9 @@ import (
 
 	"github.com/codeabuu/ECartMonolith-Microservice/pkg/common/cmd"
 	orders_app "github.com/codeabuu/ECartMonolith-Microservice/pkg/orders/application"
-	orders_infra_orders "github.com/codeabuu/ECartMonolith-Microservice/pkg/orders/infrasructure/orders"
-	orders_infra_payments "github.com/codeabuu/ECartMonolith-Microservice/pkg/orders/infrasructure/payments"
-	order_infra_product "github.com/codeabuu/ECartMonolith-Microservice/pkg/orders/infrasructure/shop"
+	orders_infra_orders "github.com/codeabuu/ECartMonolith-Microservice/pkg/orders/infrastructure/orders"
+	orders_infra_payments "github.com/codeabuu/ECartMonolith-Microservice/pkg/orders/infrastructure/payments"
+	order_infra_product "github.com/codeabuu/ECartMonolith-Microservice/pkg/orders/infrastructure/shop"
 	orders_private_http "github.com/codeabuu/ECartMonolith-Microservice/pkg/orders/interfaces/private/http"
 	orders_public_http "github.com/codeabuu/ECartMonolith-Microservice/pkg/orders/interfaces/public/http"
 	"github.com/go-chi/chi/v5"
